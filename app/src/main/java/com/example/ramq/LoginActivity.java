@@ -3,10 +3,12 @@ package com.example.ramq;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ramq.classes.AccountInformation;
@@ -16,9 +18,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText eUsername;
     private EditText ePassword;
     private Button eLogin;
+    private TextView eRegister;
     private boolean isValid;
 
-    private AccountInformation accountInfo = new AccountInformation("ramq", "ramq");
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,19 @@ public class LoginActivity extends AppCompatActivity {
         eUsername = findViewById(R.id.etUsername);
         ePassword = findViewById(R.id.etPassword);
         eLogin = findViewById(R.id.btnLogin);
+        eRegister = findViewById(R.id.tvRegister);
+
+        sharedPreferences = getApplicationContext().getSharedPreferences("AccountDB", MODE_PRIVATE); //Stored on phone
+
+        // If a account already exists locally (stored in db), make the accountinfo object
+        if (sharedPreferences != null){
+            String savedUsername = sharedPreferences.getString("username", "ramq");
+            String savedPassword = sharedPreferences.getString("password", "ramq");
+            String savedUserID = sharedPreferences.getString("userID", "001");
+            String savedEmail = sharedPreferences.getString("email", "ramq@ramq.com");
+            String savedPhone = sharedPreferences.getString("phone", "1234567890");
+            RegistrationActivity.accountInfo = new AccountInformation(savedUsername, savedPassword, savedUserID, savedEmail, savedPhone);
+        }
 
         // onclick listener for the button (i love autosuggestion)
         eLogin.setOnClickListener(new View.OnClickListener() {
@@ -58,14 +74,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        eRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Go to register page
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+            }
+        });
+
 
     }
 
     private boolean validate(String username, String password){
-        if (username.equals(accountInfo.getUserName()) && password.equals(accountInfo.getPassword())){
-            return true;
-        } else{
-            return false;
+
+        if(RegistrationActivity.accountInfo != null){
+            if (username.equals(RegistrationActivity.accountInfo.getUserName()) && password.equals(RegistrationActivity.accountInfo.getPassword())){
+                return true;
+            } else{
+                return false;
+            }
         }
+
+        return false;
     }
 }
