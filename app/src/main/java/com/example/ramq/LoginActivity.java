@@ -60,7 +60,10 @@ public class LoginActivity extends AppCompatActivity {
                     isValid = validate(inputUsername, inputPassword);
 
                     if (!isValid){
+                        // Display error message and clear lines
                         Toast.makeText(LoginActivity.this, "Incorrect username and/or password", Toast.LENGTH_SHORT).show();
+                        eUsername.setText("");
+                        ePassword.setText("");
                     } else {
                         Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
 
