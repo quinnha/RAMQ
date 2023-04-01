@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ramq.classes.AccountInformation;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText eUsername;
     private EditText ePassword;
     private Button eLogin;
     private boolean isValid;
+
+    private AccountInformation accountInfo = new AccountInformation("ramq", "ramq");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validate(String username, String password){
-        if (username.equals("ramq") && password.equals("ramq")){
+        if (username.equals(accountInfo.getUserName()) && password.equals(accountInfo.getPassword())){
             return true;
         } else{
             return false;
