@@ -24,3 +24,5 @@ public class ExampleInstrumentedTest {
         assertEquals("com.example.ramq", appContext.getPackageName());
     }
 }
+
+// Random comment!

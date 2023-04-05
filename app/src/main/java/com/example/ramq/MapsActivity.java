@@ -2,6 +2,7 @@ package com.example.ramq;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,7 +12,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.ramq.databinding.ActivityMapsBinding;
-//Akshit Comment
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -43,9 +46,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng start = new LatLng(43.257497, -79.928025);
+        LatLng end = new LatLng(43.257807, -79.914485);
+        LatLng mid = new LatLng(43.257690, -79.920932);
+
+        // Set the map type to Hybrid.
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        // Add a marker on the map coordinates.
+        googleMap.addMarker(new MarkerOptions()
+                .position(start)
+                .title("Fortinos"));
+        googleMap.addMarker(new MarkerOptions()
+                .position(end)
+                .title("Food Basics"));
+
+        // Draw route
+        Polyline line = googleMap.addPolyline(new PolylineOptions()
+                .add(start, end)
+                .width(5)
+                .color(Color.RED));
+
+        // Move the camera to the map coordinates and zoom in closer.
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(mid));
     }
+
+
 }
