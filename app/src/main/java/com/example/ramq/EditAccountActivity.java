@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ramq.classes.AccountInformation;
+import com.example.ramq.classes.EncryptionManager;
 
 public class EditAccountActivity extends AppCompatActivity {
 
