@@ -6,14 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RatingPage extends AppCompatActivity{
+import com.example.ramq.classes.RatingManager;
 
+public class RatingPageActivity extends AppCompatActivity{
+
+    private RatingManager ratingManager;
     private TextView ratingPageTitle;
     private TextView ratePrompt;
     private TextView rateeName;
@@ -30,11 +32,13 @@ public class RatingPage extends AppCompatActivity{
         rateeName = findViewById(R.id.rateeName);
         groupRadio = findViewById(R.id.groupRadio);
         nextButton = findViewById(R.id.nextButton);
+        ratingManager = new RatingManager();
 
         groupRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 selectedRating = radioGroup.findViewById(i);
+                ratingManager.rateUser(Integer.parseInt(selectedRating.getText().toString()));
             }
         });
 
@@ -43,9 +47,12 @@ public class RatingPage extends AppCompatActivity{
             public void onClick(View view) {
                 int selectedID = groupRadio.getCheckedRadioButtonId();
                 if (selectedID == -1) {
-                    Toast.makeText(RatingPage.this, "No Rating Selected", Toast.LENGTH_SHORT).show();
+                    //Rating Error
+                    Toast.makeText(RatingPageActivity.this, "No Rating Selected", Toast.LENGTH_SHORT).show();
                 } else {
+                    //Rating Success
                     //"TODO Go to the next user/next page if at the end of the user array"
+                    Toast.makeText(RatingPageActivity.this, "Rating saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });

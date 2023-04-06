@@ -1,4 +1,4 @@
-package com.example.ramq;
+package com.example.ramq.classes;
 
 public abstract class FareManagement {
 
