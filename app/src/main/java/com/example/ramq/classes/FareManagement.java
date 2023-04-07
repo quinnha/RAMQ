@@ -2,10 +2,15 @@ package com.example.ramq.classes;
 
 public abstract class FareManagement {
 
-    protected double fare;
+    protected double totalFare;
+    protected double indivFare;
 
-    public abstract void calculateFare(double distance, double numPassengers);
+    public abstract void calculateTotalFare(double distance);
 
-    public abstract double showFare();
+    public abstract void calculateIndivFare(double numPassengers);
+
+    public abstract double showTotalFare();
+
+    public abstract double showIndivFare();
 
 }

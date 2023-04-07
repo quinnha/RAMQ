@@ -3,20 +3,31 @@ package com.example.ramq.classes;
 public class FareManager extends FareManagement{
 
     public FareManager(){
-        this.fare = 0;
+        this.totalFare = 0;
+        this.indivFare = 0;
     }
 
     @Override
-    public void calculateFare(double distance, double numPassengers) {
+    public void calculateTotalFare(double distance) {
         double dollPerKm = 1.75;
         double basicFee = 4.25;
         double totalFare = basicFee + dollPerKm*distance;
-        double indivFare = totalFare/numPassengers;
-        this.fare = indivFare;
+        this.totalFare = totalFare;
     }
 
     @Override
-    public double showFare() {
-        return this.fare;
+    public void calculateIndivFare(double numPassengers) {
+        double indivFare = this.totalFare/numPassengers;
+        this.indivFare = indivFare;
+    }
+
+    @Override
+    public double showTotalFare() {
+        return this.totalFare;
+    }
+
+    @Override
+    public double showIndivFare() {
+        return this.indivFare;
     }
 }
