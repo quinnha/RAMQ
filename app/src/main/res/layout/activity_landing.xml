@@ -11,11 +11,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Landing Page"
+        android:text="RAMQ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
 
     <TextView
         android:id="@+id/tvLViewAccount"
@@ -24,7 +26,45 @@
         android:text="View Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.596" />
+        app:layout_constraintVertical_bias="0.808" />
+
+    <TextView
+        android:id="@+id/tvLCreateCarpool"
+        android:layout_width="98dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="84dp"
+        android:gravity="center"
+        android:text="Create Carpool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/tvLJoinCarpool"
+        android:layout_width="92dp"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:text="Join Carpool"
+        app:layout_constraintBottom_toTopOf="@+id/tvLScheduleCarpool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLCreateCarpool"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/tvLScheduleCarpool"
+        android:layout_width="129dp"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="Schedule Carpool"
+        app:layout_constraintBottom_toTopOf="@+id/tvLViewAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLJoinCarpool"
+        app:layout_constraintVertical_bias="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
