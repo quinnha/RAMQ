@@ -1,11 +1,22 @@
+/**
+ * Source : https://github.com/Vysh01/android-maps-directions
+ */
 package com.example.ramq;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.ramq.classes.AccountInformation;
+import com.example.ramq.classes.FareManagement;
+import com.example.ramq.classes.FareManager;
 import com.example.ramq.classes.maphelper.FetchURL;
 import com.example.ramq.classes.maphelper.TaskLoadedCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,8 +29,16 @@ import com.example.ramq.databinding.ActivityMapsBinding;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.Map;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
 
+
+
+    private final FareManagement fareCalculator = new FareManager();
+    private String originOfRequest;
+
+    private Button continueButton;
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
@@ -46,10 +65,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        pickUp = new MarkerOptions().position(new LatLng(43.257497, -79.928025)).title("Location 1");
 //        destination = new MarkerOptions().position(new LatLng(43.257807, -79.914485)).title("Location 2");
 
-        pickUp = new MarkerOptions().position(new LatLng(43.258466, -79.918819)).title("Location 1");
-        destination = new MarkerOptions().position(new LatLng(43.261651, -79.855866)).title("Location 2");
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+
+        originOfRequest = bundle.getString("origin");
+        Log.d("ORIGIN OF REQUEST: ", originOfRequest);
+
+        pickUp = new MarkerOptions().position(bundle.getParcelable("PICKUP")).title("Pick Up Location");
+        destination = new MarkerOptions().position(bundle.getParcelable("DEST")).title("Destination");
 
         urlInfoFetcher.execute(getUrl(pickUp.getPosition(), destination.getPosition(), "driving"), "driving");
+
+        continueButton = findViewById(R.id.continueButton);
+
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(MapsActivity.this,FareActivity.class);
+//                intent.putExtra("originCalc",originOfRequest);
+//                startActivity(intent);
+                SharedPreferences tripInfo = getSharedPreferences("TripInformation",MODE_PRIVATE);
+                SharedPreferences.Editor tripEdit = tripInfo.edit();
+//        tripEdit.putString("userID", getSharedPreferences("AccountDB",MODE_PRIVATE).getString("userID","001"));
+                tripEdit.putString("userID","001");
+                tripEdit.putString("destination","43.261651,-79.855866");
+                tripEdit.putString("pickUpLocation","43.258466, -79.918819");
+                tripEdit.putString("distance",String.valueOf(distanceValue));
+                tripEdit.putString("distanceText",distanceText);
+                if(originOfRequest.equals("CreateCarpool")){
+                    tripEdit.putString("qrCodeGenerated","Hello!");
+                    tripEdit.putString("numPassengers","1");
+                }
+                tripEdit.apply();
+
+                Intent intent = null;
+                if(originOfRequest.equals("CreateCarpool")) {
+                    intent = new Intent(MapsActivity.this, ScanQRCodeButtonActivity.class);
+                }else if(originOfRequest.equals("JoinCarpool")){
+                    intent = new Intent(MapsActivity.this,AvailableJoinCarpools.class);
+                }
+                startActivity(intent);
+            }
+        });
+
+
+//        SharedPreferences tripInfo = getSharedPreferences("TripInformation",MODE_PRIVATE);
 
     }
 
@@ -124,5 +185,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("distanceTextLogFromMapsActivity", distanceText);
         Log.d("distanceValueLogFromMapsActivity", String.valueOf(distanceValue));
         Log.d("timeTextLogFromMapsActivity", timeText);
+        TextView totalFare = findViewById(R.id.textViewTotalFare);
+        double fareApprox = fareCalculator.calculateTotalFare(distanceValue);
+        totalFare.setText("Total Fare: $"+fareApprox);
     }
 }

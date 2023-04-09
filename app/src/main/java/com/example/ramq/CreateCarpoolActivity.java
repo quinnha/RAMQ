@@ -1,6 +1,10 @@
+/**
+ * Source : https://www.youtube.com/watch?v=t8nGh4gN1Q0
+ */
 package com.example.ramq;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,24 +31,26 @@ public class CreateCarpoolActivity extends AppCompatActivity {
     //unique key for the intent (uniqueness in name convention to avoid duplicates)
     public static final String PICKUP = "com.example.ramq.CreateCarpool.PICKUP";
     public static final String DEST = "com.example.ramq.CreateCarpool.DEST";
-    private int PICKUP_LOCATION_REQUEST_CODE = 100;
-    private int DESTINATION_REQUEST_CODE = 101;
+    private final int PICKUP_LOCATION_REQUEST_CODE = 100;
+    private final int DESTINATION_REQUEST_CODE = 101;
 
     private EditText pickupLocation;
     private EditText destination;
 
+    private EditText carpoolName;
     private Button nextButton;
 
     //[Longitude, Latitude]
     //hardcoding for testing purpose
-    private LatLng pickUpLngLat = new LatLng(43.257497, -79.928025);;
-    private LatLng destLngLat = new LatLng(43.257807, -79.914485);;
+    private LatLng pickUpLngLat;
+    private LatLng destLngLat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_carpool);
 
+        carpoolName = findViewById(R.id.editTextCarpoolName);
 
         pickupLocation = findViewById(R.id.editTextPickup);
         destination = findViewById(R.id.editTextDestination);
@@ -52,7 +58,7 @@ public class CreateCarpoolActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.nextCreateCarpoolButton);
 
         //Initialize places
-        Places.initialize(getApplicationContext(),"APIKEY");
+        Places.initialize(getApplicationContext(),"AIzaSyB3pMTZDmqjIhC_xjMVBaAqs7j-5l19qRM");
 
         //Setting pickupLocation and destination EditTexts to non focusable
         pickupLocation.setFocusable(false);
@@ -96,8 +102,13 @@ public class CreateCarpoolActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(destLngLat != null && pickUpLngLat != null) {
                     Intent intent = new Intent(CreateCarpoolActivity.this, MapsActivity.class);
-                    intent.putExtra(PICKUP,pickUpLngLat);
-                    intent.putExtra(DEST,destLngLat);
+                    intent.putExtra("origin","CreateCarpool");
+                    intent.putExtra("PICKUP",pickUpLngLat);
+                    intent.putExtra("DEST",destLngLat);
+                    SharedPreferences tripInfo = getSharedPreferences("TripInformation",MODE_PRIVATE);
+                    SharedPreferences.Editor tripInfoEdit = tripInfo.edit();
+                    tripInfoEdit.putString("CarpoolName",carpoolName.getText().toString());
+                    tripInfoEdit.apply();
                     startActivity(intent);
                 }
                 else{
