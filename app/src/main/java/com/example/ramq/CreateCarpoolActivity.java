@@ -1,6 +1,10 @@
+/**
+ * Source : https://www.youtube.com/watch?v=t8nGh4gN1Q0
+ */
 package com.example.ramq;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +37,7 @@ public class CreateCarpoolActivity extends AppCompatActivity {
     private EditText pickupLocation;
     private EditText destination;
 
+    private EditText carpoolName;
     private Button nextButton;
 
     //[Longitude, Latitude]
@@ -45,6 +50,7 @@ public class CreateCarpoolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_carpool);
 
+        carpoolName = findViewById(R.id.editTextCarpoolName);
 
         pickupLocation = findViewById(R.id.editTextPickup);
         destination = findViewById(R.id.editTextDestination);
@@ -96,8 +102,13 @@ public class CreateCarpoolActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(destLngLat != null && pickUpLngLat != null) {
                     Intent intent = new Intent(CreateCarpoolActivity.this, MapsActivity.class);
-                    intent.putExtra(PICKUP,pickUpLngLat);
-                    intent.putExtra(DEST,destLngLat);
+                    intent.putExtra("origin","CreateCarpool");
+                    intent.putExtra("PICKUP",pickUpLngLat);
+                    intent.putExtra("DEST",destLngLat);
+                    SharedPreferences tripInfo = getSharedPreferences("TripInformation",MODE_PRIVATE);
+                    SharedPreferences.Editor tripInfoEdit = tripInfo.edit();
+                    tripInfoEdit.putString("CarpoolName",carpoolName.getText().toString());
+                    tripInfoEdit.apply();
                     startActivity(intent);
                 }
                 else{

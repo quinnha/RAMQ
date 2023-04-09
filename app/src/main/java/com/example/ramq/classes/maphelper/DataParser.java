@@ -1,3 +1,6 @@
+/**
+ * Source : https://github.com/Vysh01/android-maps-directions
+ */
 package com.example.ramq.classes.maphelper;
 
 
@@ -10,10 +13,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * Created by Vishal on 10/20/2018.
- */
 
 public class DataParser {
     public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
@@ -60,7 +59,7 @@ public class DataParser {
 
     /**
      * Method to decode polyline points
-     * Courtesy : https://jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
+     * Source : https://jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
      */
     private List<LatLng> decodePoly(String encoded) {
 

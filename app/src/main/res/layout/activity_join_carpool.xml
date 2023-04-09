@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPickup" />
 
     <Button
-        android:id="@+id/nextCreateCarpoolButton"
+        android:id="@+id/nextJoinCarpoolButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
