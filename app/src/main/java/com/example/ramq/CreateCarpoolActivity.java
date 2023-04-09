@@ -31,8 +31,8 @@ public class CreateCarpoolActivity extends AppCompatActivity {
     //unique key for the intent (uniqueness in name convention to avoid duplicates)
     public static final String PICKUP = "com.example.ramq.CreateCarpool.PICKUP";
     public static final String DEST = "com.example.ramq.CreateCarpool.DEST";
-    private int PICKUP_LOCATION_REQUEST_CODE = 100;
-    private int DESTINATION_REQUEST_CODE = 101;
+    private final int PICKUP_LOCATION_REQUEST_CODE = 100;
+    private final int DESTINATION_REQUEST_CODE = 101;
 
     private EditText pickupLocation;
     private EditText destination;
@@ -42,8 +42,8 @@ public class CreateCarpoolActivity extends AppCompatActivity {
 
     //[Longitude, Latitude]
     //hardcoding for testing purpose
-    private LatLng pickUpLngLat = new LatLng(43.257497, -79.928025);;
-    private LatLng destLngLat = new LatLng(43.257807, -79.914485);;
+    private LatLng pickUpLngLat;
+    private LatLng destLngLat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class CreateCarpoolActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.nextCreateCarpoolButton);
 
         //Initialize places
-        Places.initialize(getApplicationContext(),"APIKEY");
+        Places.initialize(getApplicationContext(),"AIzaSyB3pMTZDmqjIhC_xjMVBaAqs7j-5l19qRM");
 
         //Setting pickupLocation and destination EditTexts to non focusable
         pickupLocation.setFocusable(false);

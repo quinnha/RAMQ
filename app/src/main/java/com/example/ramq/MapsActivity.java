@@ -72,8 +72,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         originOfRequest = bundle.getString("origin");
         Log.d("ORIGIN OF REQUEST: ", originOfRequest);
 
-        pickUp = new MarkerOptions().position(new LatLng(43.258466, -79.918819)).title("Location 1");
-        destination = new MarkerOptions().position(new LatLng(43.261651, -79.855866)).title("Location 2");
+        pickUp = new MarkerOptions().position(bundle.getParcelable("PICKUP")).title("Pick Up Location");
+        destination = new MarkerOptions().position(bundle.getParcelable("DEST")).title("Destination");
 
         urlInfoFetcher.execute(getUrl(pickUp.getPosition(), destination.getPosition(), "driving"), "driving");
 

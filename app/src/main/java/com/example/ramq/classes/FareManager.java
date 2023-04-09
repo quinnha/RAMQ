@@ -1,5 +1,7 @@
 package com.example.ramq.classes;
 
+import java.text.DecimalFormat;
+
 public class FareManager extends FareManagement{
 
     public FareManager(){
@@ -12,15 +14,13 @@ public class FareManager extends FareManagement{
         double dollPerKm = 1.75;
         double basicFee = 4.25;
         double totalFare = basicFee + dollPerKm*distance/1000;
-//        this.totalFare = totalFare;
-        return totalFare;
+        return Math.round(totalFare*100.0)/100.0;
     }
 
     @Override
     public double calculateIndivFare(int numPassengers,double distance) {
         double indivFare = calculateTotalFare(distance)/numPassengers;
-//        this.indivFare = indivFare;
-        return indivFare;
+        return Math.round(indivFare*100.0)/100.0;
     }
 
 }
