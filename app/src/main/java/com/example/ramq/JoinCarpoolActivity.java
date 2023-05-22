@@ -57,7 +57,7 @@ public class JoinCarpoolActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.nextJoinCarpoolButton);
 
         //Initialize places
-        Places.initialize(getApplicationContext(),"AIzaSyB3pMTZDmqjIhC_xjMVBaAqs7j-5l19qRM");
+        Places.initialize(getApplicationContext(),"replace this with ur own key");
 
         //Setting pickupLocation and destination EditTexts to non focusable
         pickupLocation.setFocusable(false);
